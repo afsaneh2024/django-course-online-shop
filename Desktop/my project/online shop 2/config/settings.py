@@ -37,11 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #third party apps
     'crispy_forms',
     'crispy_bootstrap4',
+    'allauth',
+    'allauth.account',
+    #local apps
     'accounts',
     'pages',
 ]
+
+SITE_ID=1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -51,6 +57,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Add the account middleware:
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -102,6 +110,15 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend'
 
 
 # Internationalization
@@ -134,3 +151,13 @@ LOGOUT_REDIRECT_URL='home'
 
 #ceripy forms
 CRISPY_TEMPLATE_PACK="bootstrap4"
+
+
+#all auth setting
+ACCOUNT_SESSION_REMEMBER=True
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE=False
+ACCOUNT_USERNAME_REQUIRED=False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED=True
+ACCOUNT_UNIQUE_EMAIL = True
+
